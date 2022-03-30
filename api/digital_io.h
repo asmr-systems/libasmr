@@ -1,0 +1,4 @@
+#ifndef ASMR_DIGITAL_IO_H
+#define ASMR_DIGITAL_IO_H
+
+#endif // ASMR_DIGITAL_IO_H
