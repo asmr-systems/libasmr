@@ -1,0 +1,36 @@
+#ifndef ASMR_H
+#define ASMR_H
+
+
+//:::: quotidian junk
+#include "common.h"
+
+//:::: utility junk
+#include "utils.h"
+
+//:::: audio junk
+#include "audio.h"
+
+//:::: disk stuff
+#include "../lib/fs.h"
+#include "../lib/disks.h"
+#include "../lib/sdcard.h"
+
+//:::: sdio stuff
+#include "sdio.h"
+
+//:::: hardware abstraction layer
+#include "hal/delay.h"
+#include "hal/gpio.h"
+#include "hal/i2s.h"
+#include "hal/sdhc.h"
+#include "hal/usb.h"
+#include "hal/interrupts.h"
+
+//:::: include platform specific implementations
+#ifdef STM32F405xx
+#include "../arch/stm32f405/platform.h"
+#endif
+
+
+#endif
