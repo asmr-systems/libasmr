@@ -15,7 +15,7 @@ public:
     void begin();
 
     void write(uint8_t chan, uint8_t val);
-    void write(uint8_t val1, uint8_t val2, uint8_t val3, uint8_t val4);
+    void write(uint8_t vals[4]);
 
 private:
     SPIClass *_spi;

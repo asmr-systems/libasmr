@@ -23,11 +23,19 @@ void BH2227::begin() {
     _spi->begin();
 
     // configure spi for BH2227
-    uint32_t sck_freq = 1000000; // 1MHz
+    uint32_t sck_freq = 1000000; // 1MHz is nominal value for BH2227
     _spiSettings = SPISettings(sck_freq, BitOrder::LSBFIRST, asmr::SPI_MODE0);
 }
 
+/*!
+ *  @brief  Writes a value to a single DAC output channel.
+ *  @param  chan
+ *          The selected channel
+ *  @param  val
+ *          The output value
+ */
 void write(uint8_t chan, uint8_t val) {
+    // channel settings
     switch (chan) {
     case 0:
         chan = 0x8000; // 0b1000 left shifted
@@ -49,6 +57,17 @@ void write(uint8_t chan, uint8_t val) {
     _spi->beginTransaction(_spiSettings);
 
     digitalWrite(_cs, PinStatus::LOW);
-    transfer16((((uint16_t)chan)<<8)|(((uint16_t)val)<<4));
+    transfer16( (((uint16_t)chan)<<8) | (((uint16_t)val)<<4) );
     digitalWrite(_cs, PinStatus::HIGH);
+}
+
+/*!
+ *  @brief  Writes values to all DAC output channels
+ *  @param  vals
+ *          Vector of 4 values for each respective DAC output channel
+ */
+void write(uint8_t vals[4]) {
+    for (uint8_t i = 0; i<4; i++) {
+        write(i, vals[i]);
+    }
 }
