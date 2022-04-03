@@ -1,9 +1,12 @@
 #ifndef ASMR_SAMD_LIBRARIES_SPI_H
 #define ASMR_SAMD_LIBRARIES_SPI_H
 
-// implement HardwareSPI class
+#include <ASMR.h>
+#include <api/HardwareSPI.h>
 
-// expose a singleton or two or three or ...
+#include "core/SERCOM.h"
+
+
 class SPIClass : public HardwareSPI {
 public:
     SPIClass();
