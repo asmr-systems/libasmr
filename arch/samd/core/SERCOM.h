@@ -11,6 +11,7 @@ public:
     // TODO
 
     //:::: SPI ::::
+    void initSPI();
     // TODO
 
     //:::: WIRE (I2C) ::::
