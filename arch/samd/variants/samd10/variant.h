@@ -8,7 +8,7 @@
 // define all SAMD10 and sub-variant related stuff here.
 
 // TODO change these defines into constants...why not?
-#define VARIANT_MCK 1000000  // Main Clock
+#define VARIANT_MCK (48000000ul)  // Main Clock
 
 
 #endif // SAMD10_VARIANT_H
