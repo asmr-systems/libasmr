@@ -1,5 +1,4 @@
-#include "ASMR.h"
-#include "Reset.h"
+#include <ASMR>
 
 
 static volatile uint32_t _ulTickCount = 0;
@@ -27,7 +26,7 @@ unsigned long micros() {
         count_2 = _ulTickCount;
     } while ((pend_1 != pend_2) || (count_1 != count_2) || (ticks_1 < ticks_2));
 
-    return ((count_1+pend_1) * 1000) + (((Systick->LOAD-ticks_1)*(1048576/(VARIANT_MCK/1000000)))>>20);
+    return ((count_1+pend_1) * 1000) + (((SysTick->LOAD-ticks_1)*(1048576/(VARIANT_MCK/1000000)))>>20);
 }
 
 void delay(unsigned long ms) {
@@ -50,7 +49,7 @@ extern "C" {
     void SysTick_DefaultHandler() {
         // increment tick count
         _ulTickCount++;
-        tickReset(); // ? idk what really this is
+        //tickReset(); // ? idk what really this is
     }
 
 }

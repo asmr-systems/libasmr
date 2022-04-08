@@ -1,8 +1,7 @@
 #ifndef ASMR_BH2227_H
 #define ASMR_BH2227_H
 
-#include "ASMR.h"
-
+#include <ASMR>
 #include <SPI.h>
 
 /*!

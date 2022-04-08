@@ -1,7 +1,7 @@
 #ifndef ASMR_SAMD_LIBRARIES_SPI_H
 #define ASMR_SAMD_LIBRARIES_SPI_H
 
-#include <ASMR.h>
+#include <ASMR>
 #include <api/HardwareSPI.h>
 
 #include "core/SERCOM.h"
