@@ -46,7 +46,7 @@ void delay(unsigned long ms) {
 
 extern "C" {
 
-    void SysTick_DefaultHandler() {
+    void SysTick_Handler() {
         // increment tick count
         _ulTickCount++;
         //tickReset(); // ? idk what really this is
