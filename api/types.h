@@ -1,6 +1,10 @@
 #ifndef ASMR_TYPES_H
 #define ASMR_TYPES_H
 
+#include <cstdint>
+
+using pin_size_t = uint8_t;
+
 enum class PinStatus {
     LOW,
     HIGH,

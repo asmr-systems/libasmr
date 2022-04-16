@@ -7,6 +7,7 @@ unsigned long millis() {
     return _ulTickCount;
 }
 
+// TODO fix timing bug. it seems like the timing isn't accurate.
 unsigned long micros() {
     uint32_t ticks_1, ticks_2;
     uint32_t pend_1, pend_2;
