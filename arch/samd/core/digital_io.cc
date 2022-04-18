@@ -38,7 +38,7 @@ void pinMode(pin_size_t pinNumber, PinMode pinMode) {
 void digitalWrite(pin_size_t pin, PinStatus status) {
     // TODO handle case if pin isn't available
 
-    uint32_t pinMask = (1ul<<pin);
+    uint32_t pinMask = (1ul<<g_PinTable[pin].pin);
 
     if ( (PORT->Group[g_PinTable[pin].port].DIRSET.reg & pinMask) == 0 ) {
         // the pin is not an output, disable pull-up if val is LOW, otherwise enable pull-up
@@ -55,6 +55,12 @@ void digitalWrite(pin_size_t pin, PinStatus status) {
     }
 }
 
-PinStatus digitalRead(pin_size_t pinNumber) {
-    // TODO
+PinStatus digitalRead(pin_size_t pin) {
+    // TODO handle when the pin isn't available
+
+    if ((PORT->Group[g_PinTable[pin].port].IN.reg & (1ul<<g_PinTable[pin].pin)) != 0) {
+        return PinStatus::HIGH;
+    }
+
+    return PinStatus::LOW;
 }
