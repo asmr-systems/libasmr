@@ -6,18 +6,29 @@
 
 // define all SAMD10 and sub-variant related stuff here.
 
+/** Frequency of the board main oscillator (32.768kHz)*/
+#define VARIANT_MAINOSC		(32768ul)
+
 // TODO change these defines into constants...why not?
+/** Frequency of board main clock 48MHz  */
 #define VARIANT_MCK (48000000ul)  // Main Clock
 
-enum PortNumber {
+
+// aliasing defines so that samd10 matches with samd21
+#define FUSES_OSC32K_CAL_ADDR FUSES_OSC32K_ADDR
+#define FUSES_OSC32K_CAL_Pos  FUSES_OSC32K_Pos
+#define FUSES_OSC32K_CAL_Msk  FUSES_OSC32K_Msk
+
+
+typedef enum {
     PORTA = 0,
     PORTB = 1,
-};
+} PortNumber;
 
-struct PinTableEntry {
+typedef struct {
     PortNumber  port;
     uint32_t    pin;
-};
+} PinTableEntry;
 
 // Pin table instantiated in variant.cc
 extern const PinTableEntry g_PinTable[];
