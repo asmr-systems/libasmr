@@ -9,17 +9,17 @@
 // TODO change these defines into constants...why not?
 #define VARIANT_MCK (48000000ul)  // Main Clock
 
-enum PortGroup {
+enum PortNumber {
     PORTA = 0,
     PORTB = 1,
-}
+};
 
-struct PinTable {
-    PortGroup  port;
-    uint32_t   pin;
+struct PinTableEntry {
+    PortNumber  port;
+    uint32_t    pin;
 };
 
 // Pin table instantiated in variant.cc
-extern const PinTable g_PinTable[];
+extern const PinTableEntry g_PinTable[];
 
 #endif // SAMD10_VARIANT_H

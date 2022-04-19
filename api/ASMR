@@ -9,10 +9,10 @@
 
 //:::: common ASMR libs
 #include "constants.h"
-/* #include "types.h" */
+#include "types.h"
 #include "time.h"
 /* #include "math.h" */
-/* #include "digital_io.h" */
+#include "digital_io.h"
 /* #include "analog_io.h" */
 #include <variant.h>              // this header must be included from the core implementation.
 // TODO add other "native" apis.
