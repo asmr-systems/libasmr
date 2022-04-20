@@ -4,6 +4,9 @@
 
 const PinTableEntry g_PinTable[] = {
     { PORTA, 14, PIO_DIGITAL }, // 0
+    { PORTA, 15, PIO_SERCOM }, // 1
+    { PORTA, 16, PIO_SERCOM }, // 2
+    { PORTA, 17, PIO_SERCOM }, // 3
 
 
     // 0..13 - Digital pins

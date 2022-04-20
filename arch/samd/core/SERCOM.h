@@ -209,4 +209,25 @@ private:
     bool onFlushWaitUartTXC = false;
 };
 
+
+//:::: declare sercoms
+#ifdef SERCOM0
+extern SERCOM sercom0;
+#endif // SERCOM0
+#ifdef SERCOM1
+extern SERCOM sercom1;
+#endif // SERCOM1
+#ifdef SERCOM2
+extern SERCOM sercom2;
+#endif // SERCOM2
+#ifdef SERCOM3
+extern SERCOM sercom3;
+#endif // SERCOM3
+#ifdef SERCOM4
+extern SERCOM sercom4;
+#endif // SERCOM4
+#ifdef SERCOM5
+extern SERCOM sercom5;
+#endif // SERCOM5
+
 #endif

@@ -6,6 +6,7 @@
 
 //:::: common C++ libs
 #include <cstdint>
+#include <cstddef>
 
 //:::: common ASMR libs
 #include "constants.h"

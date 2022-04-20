@@ -18,6 +18,7 @@
 
 // #include <ASMR>
 #include "SERCOM.h"
+#include "wiring.h"
 #include "variant.h"
 
 #ifndef WIRE_RISE_TIME_NANOSECONDS
@@ -698,11 +699,13 @@ void SERCOM::initClockNVIC( void )
     clockId = GCM_SERCOM2_CORE;
     IdNvic = SERCOM2_IRQn;
   }
+  #if defined(SERCOM3)
   else if(sercom == SERCOM3)
   {
     clockId = GCM_SERCOM3_CORE;
     IdNvic = SERCOM3_IRQn;
   }
+  #endif // SERCOM3
   #if defined(SERCOM4)
   else if(sercom == SERCOM4)
   {
@@ -738,3 +741,24 @@ void SERCOM::initClockNVIC( void )
     /* Wait for synchronization */
   }
 }
+
+
+//:::: initialize sercoms
+#ifdef SERCOM0
+SERCOM sercom0(SERCOM0);
+#endif // SERCOM0
+#ifdef SERCOM1
+SERCOM sercom1(SERCOM1);
+#endif // SERCOM1
+#ifdef SERCOM2
+SERCOM sercom2(SERCOM2);
+#endif // SERCOM2
+#ifdef SERCOM3
+SERCOM sercom3(SERCOM3);
+#endif // SERCOM3
+#ifdef SERCOM4
+SERCOM sercom4(SERCOM4);
+#endif // SERCOM4
+#ifdef SERCOM5
+SERCOM sercom5(SERCOM5);
+#endif // SERCOM5
