@@ -4,7 +4,8 @@
 #include <ASMR>
 #include <api/HardwareSPI.h>
 
-#include "core/SERCOM.h"
+#include "SERCOM.h"
+#include "variant.h"
 
 
 class SPIClass : public HardwareSPI {
@@ -27,6 +28,22 @@ public:
 
     virtual void begin();
     virtual void end();
+
+private:
+    void init();
+    void config(SPISettings settings);
+
+    SERCOM *_sercom;
+    uint8_t _cipo;
+    uint8_t _copi;
+    uint8_t _sck;
+
+    SercomSpiTXPad _padTx;
+    SercomRXPad    _padRx;
+
+    SPISettings settings;
+
+    bool initialized = false;
 };
 
 

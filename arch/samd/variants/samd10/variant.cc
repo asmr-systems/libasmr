@@ -1,7 +1,9 @@
 #include "variant.h"
+#include "wiring.h"
+
 
 const PinTableEntry g_PinTable[] = {
-    { PORTA, 14 }, // 0
+    { PORTA, 14, PIO_DIGITAL }, // 0
 
 
     // 0..13 - Digital pins

@@ -1,4 +1,5 @@
 #include <ASMR>
+#include "wiring.h"
 
 
 void pinMode(pin_size_t pin, PinMode pinMode) {

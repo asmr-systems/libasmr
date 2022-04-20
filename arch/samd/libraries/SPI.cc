@@ -18,15 +18,12 @@
  */
 
 #include "SPI.h"
-#include <Arduino.h>
 #include <wiring_private.h>
-#include <assert.h>
 
 #define SPI_IMODE_NONE   0
 #define SPI_IMODE_EXTINT 1
 #define SPI_IMODE_GLOBAL 2
 
-//const SPISettings DEFAULT_SPI_SETTINGS = SPISettings();
 
 static inline SercomDataOrder getBitOrder(SPISettings& settings) {
   return (settings.getBitOrder() == MSBFIRST ? MSB_FIRST : LSB_FIRST);
@@ -48,22 +45,21 @@ static inline SercomSpiClockMode getDataMode(SPISettings& settings) {
     }
 }
 
-SPIClassSAMD::SPIClassSAMD(SERCOM *p_sercom, uint8_t uc_pinMISO, uint8_t uc_pinSCK, uint8_t uc_pinMOSI, SercomSpiTXPad PadTx, SercomRXPad PadRx)
-: settings(0, MSBFIRST, SPI_MODE0)
-{
-  initialized = false;
-  assert(p_sercom != NULL);
-  _p_sercom = p_sercom;
-
-  // pins
-  _uc_pinMiso = uc_pinMISO;
-  _uc_pinSCK = uc_pinSCK;
-  _uc_pinMosi = uc_pinMOSI;
-
-  // SERCOM pads
-  _padTx=PadTx;
-  _padRx=PadRx;
-}
+SPIClass::SPIClass(
+    SERCOM *sercom,
+    uint8_t cipo,
+    uint8_t sck,
+    uint8_t copi,
+    SercomSpiTXPad padTx,
+    SercomRXPad padRx) :
+    _sercom(sercom),
+    _cipo(cipo),
+    _copi(copi),
+    _sck(sck),
+    _padTx(padTx),
+    _padRx(padRx),
+    settings(0, MSBFIRST, SPI_MODE0)
+{}
 
 void SPIClassSAMD::begin()
 {
@@ -91,23 +87,23 @@ void SPIClassSAMD::config(SPISettings settings)
 {
   if (this->settings != settings) {
     this->settings = settings;
-    _p_sercom->disableSPI();
+    _sercom->disableSPI();
 
     uint32_t clock_freq = settings.getClockFreq();
     if (clock_freq > SERCOM_FREQ_REF/SPI_MIN_CLOCK_DIVIDER) {
       clock_freq = SERCOM_FREQ_REF/SPI_MIN_CLOCK_DIVIDER;
     }
 
-    _p_sercom->initSPI(_padTx, _padRx, SPI_CHAR_SIZE_8_BITS, getBitOrder(settings));
-    _p_sercom->initSPIClock(getDataMode(settings), clock_freq);
+    _sercom->initSPI(_padTx, _padRx, SPI_CHAR_SIZE_8_BITS, getBitOrder(settings));
+    _sercom->initSPIClock(getDataMode(settings), clock_freq);
 
-    _p_sercom->enableSPI();
+    _sercom->enableSPI();
   }
 }
 
-void SPIClassSAMD::end()
+void SPIClass::end()
 {
-  _p_sercom->resetSPI();
+  _sercom->resetSPI();
   initialized = false;
 }
 
@@ -161,7 +157,7 @@ void SPIClassSAMD::notUsingInterrupt(int interruptNumber)
     interrupts();
 }
 
-void SPIClassSAMD::beginTransaction(SPISettings settings)
+void SPIClass::beginTransaction(SPISettings settings)
 {
   if (interruptMode != SPI_IMODE_NONE)
   {
@@ -177,7 +173,7 @@ void SPIClassSAMD::beginTransaction(SPISettings settings)
   config(settings);
 }
 
-void SPIClassSAMD::endTransaction(void)
+void SPIClass::endTransaction(void)
 {
   if (interruptMode != SPI_IMODE_NONE)
   {
@@ -191,33 +187,33 @@ void SPIClassSAMD::endTransaction(void)
   }
 }
 
-void SPIClassSAMD::setBitOrder(BitOrder order)
+void SPIClass::setBitOrder(BitOrder order)
 {
   if (order == LSBFIRST) {
-    _p_sercom->setDataOrderSPI(LSB_FIRST);
+    _sercom->setDataOrderSPI(LSB_FIRST);
   } else {
-    _p_sercom->setDataOrderSPI(MSB_FIRST);
+    _sercom->setDataOrderSPI(MSB_FIRST);
   }
 }
 
-void SPIClassSAMD::setDataMode(uint8_t mode)
+void SPIClass::setDataMode(uint8_t mode)
 {
   switch (mode)
   {
     case SPI_MODE0:
-      _p_sercom->setClockModeSPI(SERCOM_SPI_MODE_0);
+      _sercom->setClockModeSPI(SERCOM_SPI_MODE_0);
       break;
 
     case SPI_MODE1:
-      _p_sercom->setClockModeSPI(SERCOM_SPI_MODE_1);
+      _sercom->setClockModeSPI(SERCOM_SPI_MODE_1);
       break;
 
     case SPI_MODE2:
-      _p_sercom->setClockModeSPI(SERCOM_SPI_MODE_2);
+      _sercom->setClockModeSPI(SERCOM_SPI_MODE_2);
       break;
 
     case SPI_MODE3:
-      _p_sercom->setClockModeSPI(SERCOM_SPI_MODE_3);
+      _sercom->setClockModeSPI(SERCOM_SPI_MODE_3);
       break;
 
     default:
@@ -225,26 +221,26 @@ void SPIClassSAMD::setDataMode(uint8_t mode)
   }
 }
 
-void SPIClassSAMD::setClockDivider(uint8_t div)
+void SPIClass::setClockDivider(uint8_t div)
 {
   if (div < SPI_MIN_CLOCK_DIVIDER) {
-    _p_sercom->setBaudrateSPI(SPI_MIN_CLOCK_DIVIDER);
+    _sercom->setBaudrateSPI(SPI_MIN_CLOCK_DIVIDER);
   } else {
-    _p_sercom->setBaudrateSPI(div);
+    _sercom->setBaudrateSPI(div);
   }
 }
 
-byte SPIClassSAMD::transfer(uint8_t data)
+byte SPIClass::transfer(uint8_t data)
 {
-  return _p_sercom->transferDataSPI(data);
+  return _sercom->transferDataSPI(data);
 }
 
-uint16_t SPIClassSAMD::transfer16(uint16_t data) {
+uint16_t SPIClass::transfer16(uint16_t data) {
   union { uint16_t val; struct { uint8_t lsb; uint8_t msb; }; } t;
 
   t.val = data;
 
-  if (_p_sercom->getDataOrderSPI() == LSB_FIRST) {
+  if (_sercom->getDataOrderSPI() == LSB_FIRST) {
     t.lsb = transfer(t.lsb);
     t.msb = transfer(t.msb);
   } else {
@@ -255,7 +251,7 @@ uint16_t SPIClassSAMD::transfer16(uint16_t data) {
   return t.val;
 }
 
-void SPIClassSAMD::transfer(void *buf, size_t count)
+void SPIClass::transfer(void *buf, size_t count)
 {
   uint8_t *buffer = reinterpret_cast<uint8_t *>(buf);
   for (size_t i=0; i<count; i++) {

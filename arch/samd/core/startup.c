@@ -1,5 +1,3 @@
-#include <samd10.h>
-
 #include "variant.h"
 
 /**

@@ -19,18 +19,4 @@
 #define FUSES_OSC32K_CAL_Pos  FUSES_OSC32K_Pos
 #define FUSES_OSC32K_CAL_Msk  FUSES_OSC32K_Msk
 
-
-typedef enum {
-    PORTA = 0,
-    PORTB = 1,
-} PortNumber;
-
-typedef struct {
-    PortNumber  port;
-    uint32_t    pin;
-} PinTableEntry;
-
-// Pin table instantiated in variant.cc
-extern const PinTableEntry g_PinTable[];
-
 #endif // SAMD10_VARIANT_H
