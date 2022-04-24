@@ -1,6 +1,9 @@
 #ifndef _DMA_H_
 #define _DMA_H_
 
+#include <variant.h>
+
+
 // TODO add DMA related types (see AdafruitDMA)
 
 enum class DMAStatus {
@@ -76,7 +79,7 @@ public:
     bool isInProgress();
 
     // TODO
-    DMacDescriptor* addDescriptor();
+    DmacDescriptor* addDescriptor();
 };
 
 #endif // _DMA_H_

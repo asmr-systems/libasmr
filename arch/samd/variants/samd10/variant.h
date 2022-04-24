@@ -19,6 +19,10 @@
 #define FUSES_OSC32K_CAL_Pos  FUSES_OSC32K_Pos
 #define FUSES_OSC32K_CAL_Msk  FUSES_OSC32K_Msk
 
+// TODO rename with VARIANT prefix
 #define SPI_INTERFACES_COUNT 1
+
+// DMA stuff
+#define VARIANT_DMAC_CH_NUM 4
 
 #endif // SAMD10_VARIANT_H
